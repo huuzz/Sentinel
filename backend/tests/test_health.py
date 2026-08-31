@@ -27,9 +27,7 @@ async def test_liveness() -> None:
 async def test_readiness_returns_503_when_database_is_unavailable() -> None:
     app.dependency_overrides[get_session] = unavailable_session
     try:
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://test"
-        ) as client:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             response = await client.get("/health/ready")
     finally:
         app.dependency_overrides.clear()

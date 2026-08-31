@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     database_url: str = Field(
         default="postgresql+asyncpg://sentinel:sentinel_dev@localhost:5432/sentinel"
     )
+    brute_force_threshold: int = Field(default=10, ge=2, le=1000)
+    brute_force_window_seconds: int = Field(default=120, ge=10, le=3600)
 
 
 @lru_cache

@@ -2,9 +2,9 @@
 
 SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
 
-> **Status:** Milestone 0 foundation. Detection, authentication, AI, and ML are intentionally not implemented yet.
+> **Status:** Milestone 1 core security vertical slice. Authentication, AI, and ML are intentionally scheduled for later milestones.
 
-## Foundation features
+## Current features
 
 - FastAPI liveness and database-backed readiness endpoints
 - Async SQLAlchemy and Alembic foundation for PostgreSQL
@@ -13,6 +13,10 @@ SentinelAI is an explainable security monitoring and threat-analysis platform bu
 - Docker Compose with health-gated service startup
 - Locked npm and uv dependencies, automated tests, linting, type checking, and CI
 - Security, architecture, database, API, threat-model, and roadmap documentation
+- Validated security-event ingestion and filterable event/alert APIs
+- Synchronous brute-force detection with alert deduplication and evidence links
+- Analyst dashboard, event list, alert list, and investigation view
+- Safe `normal` and `brute-force` synthetic simulator scenarios
 
 ## Architecture
 
@@ -77,9 +81,18 @@ npm test
 npm run build
 ```
 
-## Planned demo
+## Demo workflow
 
-Milestone 1 will provide the first complete flow: start the stack, generate normal events, generate a synthetic brute-force scenario, and inspect the resulting HIGH alert and supporting evidence in the dashboard.
+With the stack running, open a second terminal at the repository root:
+
+```bash
+python -m simulator.cli normal
+python -m simulator.cli brute-force
+```
+
+Refresh `http://localhost:3000`. Normal events appear without an alert. The brute-force scenario adds ten failed authentication events from reserved IP `198.51.100.42`, produces one HIGH alert, and links those events as evidence on the alert detail page.
+
+The simulator refuses arbitrary external targets. Its `--url` option accepts only the local SentinelAI development stack.
 
 ## Security principles
 

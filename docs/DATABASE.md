@@ -1,8 +1,8 @@
 # Database
 
-Milestone 0 configures async SQLAlchemy, Alembic, and PostgreSQL but intentionally creates no domain tables. Every schema change must be represented by an Alembic migration and tested from an empty database.
+Milestone 1 creates the core security tables through Alembic. Every schema change must be represented by a migration and tested from an empty database.
 
-Planned Milestone 1 relationships:
+Core relationships:
 
 ```mermaid
 erDiagram

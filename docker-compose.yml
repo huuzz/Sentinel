@@ -17,6 +17,7 @@ services:
 
   backend:
     build: ./backend
+    command: ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
     environment:
       SENTINEL_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-sentinel}:${POSTGRES_PASSWORD:-sentinel_dev}@postgres:5432/${POSTGRES_DB:-sentinel}
       SENTINEL_ENVIRONMENT: development

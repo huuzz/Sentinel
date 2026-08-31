@@ -9,4 +9,9 @@ describe("StatusCard", () => {
     expect(screen.getByText("Operational")).toBeInTheDocument();
     expect(screen.getByText("sentinelai-backend")).toBeInTheDocument();
   });
+
+  it("shows an unavailable backend", () => {
+    render(<StatusCard state={null} />);
+    expect(screen.getByText("Unavailable")).toBeInTheDocument();
+  });
 });

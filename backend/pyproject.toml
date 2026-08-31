@@ -11,8 +11,8 @@ dev = ["httpx>=0.28,<1", "mypy>=1.17,<2", "pytest>=8.4,<9", "pytest-asyncio>=1.1
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["tests"]
-pythonpath = ["."]
+testpaths = ["tests", "../simulator/tests"]
+pythonpath = [".", ".."]
 
 [tool.ruff]
 line-length = 100

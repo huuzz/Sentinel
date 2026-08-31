@@ -16,9 +16,7 @@ def configure_logging(settings: Settings) -> None:
                     "defaults": {"request_id": None},
                 }
             },
-            "handlers": {
-                "default": {"class": "logging.StreamHandler", "formatter": "json"}
-            },
+            "handlers": {"default": {"class": "logging.StreamHandler", "formatter": "json"}},
             "root": {"handlers": ["default"], "level": settings.log_level.upper()},
         }
     )
