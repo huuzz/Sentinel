@@ -28,4 +28,4 @@ An authentication failure is represented as `event_type: "authentication"` and `
 - `GET /api/v1/alerts/{alert_id}` includes supporting security events.
 - `GET /api/v1/dashboard/summary` returns totals, severity counts, common event types, hourly volume, and recent alerts.
 
-The initial brute-force rule creates a HIGH alert after ten failures from one source IP inside two minutes. Findings are deduplicated by rule, source, and time bucket.
+The initial brute-force rule creates a HIGH alert after ten failures from one source IP inside two minutes. While that finding remains open, subsequent matching evidence is attached to the same alert instead of creating an alert storm.

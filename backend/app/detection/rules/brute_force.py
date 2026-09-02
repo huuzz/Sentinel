@@ -31,7 +31,6 @@ class BruteForceRule:
         ]
         if len(matching) < self.threshold:
             return None
-        bucket = int(current.timestamp.timestamp()) // self.window_seconds
         return DetectionFinding(
             rule_id=self.rule_id,
             rule_version=self.rule_version,
@@ -42,6 +41,6 @@ class BruteForceRule:
             ),
             severity=AlertSeverity.HIGH,
             risk_score=80.0,
-            deduplication_key=f"{self.rule_id}:{current.source_ip}:{bucket}",
+            deduplication_key=f"{self.rule_id}:{current.source_ip}",
             events=matching,
         )

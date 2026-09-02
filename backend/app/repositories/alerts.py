@@ -28,13 +28,15 @@ class AlertRepository:
                 detection_rule=finding.rule_id,
                 rule_version=finding.rule_version,
                 deduplication_key=finding.deduplication_key,
+                evidence=[AlertEvent(event_id=event.id) for event in finding.events],
             )
             self.session.add(alert)
             await self.session.flush()
-        existing = {link.event_id for link in alert.evidence}
-        for event in finding.events:
-            if event.id not in existing:
-                alert.evidence.append(AlertEvent(event_id=event.id))
+        else:
+            existing = {link.event_id for link in alert.evidence}
+            for event in finding.events:
+                if event.id not in existing:
+                    alert.evidence.append(AlertEvent(event_id=event.id))
         await self.session.flush()
         return alert
 
