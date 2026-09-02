@@ -27,4 +27,8 @@ class AlertDetailResponse(AlertResponse):
 
 class AlertListResponse(BaseModel):
     items: list[AlertResponse]
+
+
+class AlertUpdate(BaseModel):
+    status: AlertStatus
     next_cursor: str | None = None

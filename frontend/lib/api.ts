@@ -19,3 +19,10 @@ export const getDashboard = () => apiGet<DashboardSummary>("/api/v1/dashboard/su
 export const getEvents = async () => (await apiGet<{items:SecurityEvent[]}>("/api/v1/events?limit=100"))?.items ?? [];
 export const getAlerts = async () => (await apiGet<{items:Alert[]}>("/api/v1/alerts?limit=100"))?.items ?? [];
 export const getAlert = (id:string) => apiGet<AlertDetail>(`/api/v1/alerts/${encodeURIComponent(id)}`);
+
+export async function authenticatedGet<T>(path: string, token: string): Promise<T> {
+  const relative = path.replace("/api/v1", "");
+  const response = await fetch(`/api/backend${relative}`, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
+  if (!response.ok) throw new Error(`Request failed (${response.status})`);
+  return response.json() as Promise<T>;
+}

@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.dependencies import ViewerUser
 from app.db.session import get_session
 from app.models.alert import Alert
 from app.models.security_event import SecurityEvent
@@ -16,7 +17,7 @@ DatabaseSession = Annotated[AsyncSession, Depends(get_session)]
 
 
 @router.get("/summary", response_model=DashboardSummary)
-async def dashboard_summary(session: DatabaseSession) -> DashboardSummary:
+async def dashboard_summary(session: DatabaseSession, _: ViewerUser) -> DashboardSummary:
     now = datetime.now(UTC)
     start_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
     start_volume = now - timedelta(hours=24)

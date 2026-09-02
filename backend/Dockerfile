@@ -8,6 +8,7 @@ RUN useradd --create-home --uid 10001 sentinel
 WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 COPY app ./app
+COPY scripts ./scripts
 COPY migrations ./migrations
 COPY alembic.ini ./
 ENV PATH="/app/.venv/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1

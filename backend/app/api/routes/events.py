@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.dependencies import AnalystUser, ViewerUser
 from app.core.config import Settings, get_settings
 from app.db.session import get_session
 from app.models.security_event import SecurityEvent
@@ -43,7 +44,7 @@ def event_response(event: SecurityEvent) -> SecurityEventResponse:
 
 @router.post("", response_model=EventIngestResponse, status_code=status.HTTP_201_CREATED)
 async def ingest_event(
-    payload: SecurityEventCreate, session: DatabaseSession, settings: AppSettings
+    payload: SecurityEventCreate, session: DatabaseSession, settings: AppSettings, _: AnalystUser
 ) -> EventIngestResponse:
     event, alert_ids = await IngestionService(session, settings).ingest(payload)
     return EventIngestResponse(
@@ -54,6 +55,7 @@ async def ingest_event(
 @router.get("", response_model=EventListResponse)
 async def list_events(
     session: DatabaseSession,
+    _: ViewerUser,
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
     event_type: Annotated[str | None, Query(max_length=64)] = None,
     source_ip: Annotated[str | None, Query(max_length=45)] = None,
@@ -71,7 +73,9 @@ async def list_events(
 
 
 @router.get("/{event_id}", response_model=SecurityEventResponse)
-async def get_event(event_id: uuid.UUID, session: DatabaseSession) -> SecurityEventResponse:
+async def get_event(
+    event_id: uuid.UUID, session: DatabaseSession, _: ViewerUser
+) -> SecurityEventResponse:
     event = await EventRepository(session).get(event_id)
     if event is None:
         raise HTTPException(status_code=404, detail="Security event not found")

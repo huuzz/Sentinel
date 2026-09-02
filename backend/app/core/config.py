@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     )
     brute_force_threshold: int = Field(default=10, ge=2, le=1000)
     brute_force_window_seconds: int = Field(default=120, ge=10, le=3600)
+    jwt_secret: str = Field(default="development-only-change-me-32-bytes", min_length=32)
+    access_token_minutes: int = Field(default=15, ge=1, le=60)
+    refresh_token_days: int = Field(default=7, ge=1, le=30)
+    refresh_cookie_secure: bool = False
 
 
 @lru_cache

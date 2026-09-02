@@ -11,9 +11,10 @@ def main() -> None:
     parser.add_argument(
         "--url", default=os.getenv("SENTINEL_SIMULATOR_URL", "http://localhost:8000")
     )
+    parser.add_argument("--token", default=os.getenv("SENTINEL_SIMULATOR_TOKEN"))
     args = parser.parse_args()
     events = normal_events() if args.scenario == "normal" else brute_force_events()
-    responses = send_events(args.url, events)
+    responses = send_events(args.url, events, args.token)
     alert_ids: set[str] = set()
     for response in responses:
         values = response.get("alert_ids")

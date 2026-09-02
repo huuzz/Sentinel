@@ -2,6 +2,15 @@
 
 FastAPI publishes interactive OpenAPI documentation at `/docs` and its schema at `/openapi.json`.
 
+## Authentication and authorization
+
+- `POST /api/v1/auth/login`, `/refresh`, and `/logout` manage rotating sessions.
+- `GET /api/v1/auth/me` returns the signed-in user.
+- `/api/v1/users` and `/api/v1/audit-logs` are administrator-only.
+- Domain reads allow VIEWER, ANALYST, and ADMIN. Ingestion and alert status changes require ANALYST or ADMIN.
+
+Protected calls use `Authorization: Bearer <access-token>`.
+
 ## Operational endpoints
 
 ### `GET /health/live`
@@ -26,6 +35,7 @@ An authentication failure is represented as `event_type: "authentication"` and `
 
 - `GET /api/v1/alerts` accepts `limit`, `severity`, `status`, and `rule` filters.
 - `GET /api/v1/alerts/{alert_id}` includes supporting security events.
+- `PATCH /api/v1/alerts/{alert_id}` updates status for analysts and administrators.
 - `GET /api/v1/dashboard/summary` returns totals, severity counts, common event types, hourly volume, and recent alerts.
 
 The initial brute-force rule creates a HIGH alert after ten failures from one source IP inside two minutes. While that finding remains open, subsequent matching evidence is attached to the same alert instead of creating an alert storm.

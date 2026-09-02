@@ -17,14 +17,19 @@ def validate_target(base_url: str) -> str:
     return base_url.rstrip("/")
 
 
-def send_events(base_url: str, events: Iterable[dict[str, object]]) -> list[dict[str, object]]:
+def send_events(
+    base_url: str, events: Iterable[dict[str, object]], access_token: str | None = None
+) -> list[dict[str, object]]:
     target = f"{validate_target(base_url)}/api/v1/events"
     responses = []
     for event in events:
+        headers = {"Content-Type": "application/json"}
+        if access_token:
+            headers["Authorization"] = f"Bearer {access_token}"
         request = urllib.request.Request(
             target,
             data=json.dumps(event).encode(),
-            headers={"Content-Type": "application/json"},
+            headers=headers,
             method="POST",
         )
         try:
