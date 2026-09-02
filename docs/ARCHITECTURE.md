@@ -1,5 +1,16 @@
 # Architecture
 
+## Detection registry and scoring
+
+Ingestion loads one bounded set of events related by source address or identity for the maximum
+configured rule window, then gives each rule only its own time slice. Rules remain synchronous,
+deterministic, and independent of HTTP. Active findings deduplicate by rule and subject; closing an
+alert releases that identity for a later incident.
+
+Risk scores are explanatory prioritization, not probability. Each score combines a documented
+severity base (LOW 20, MEDIUM 45, HIGH 70, CRITICAL 85), up to 10 confidence points, and up to 10
+points for evidence volume, capped at 100.
+
 SentinelAI begins as a modular monolith: one FastAPI deployment owns domain behavior and one Next.js deployment owns the interface. PostgreSQL is the only datastore. This keeps transactions, operations, and interview explanations clear while retaining internal service boundaries.
 
 ```mermaid

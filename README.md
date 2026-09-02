@@ -2,7 +2,7 @@
 
 SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
 
-> **Status:** Milestone 3 advisory AI analyst. ML and grounded knowledge are scheduled for later milestones.
+> **Status:** Milestone 4 expanded deterministic detection. ML and grounded knowledge are scheduled for later milestones.
 
 ## Current features
 
@@ -19,6 +19,7 @@ SentinelAI is an explainable security monitoring and threat-analysis platform bu
 - Safe `normal` and `brute-force` synthetic simulator scenarios
 - Argon2id authentication, rotating refresh sessions, role enforcement, and audit logging
 - Deterministic local AI analyst with validated summaries, evidence citations, and recommended actions
+- Password-spray, API-volume, and suspicious-success rules with centralized risk scoring
 
 ## Architecture
 
@@ -96,6 +97,9 @@ With the stack running, open a second terminal at the repository root:
 ```bash
 python -m simulator.cli normal --token YOUR_ANALYST_OR_ADMIN_ACCESS_TOKEN
 python -m simulator.cli brute-force --token YOUR_ANALYST_OR_ADMIN_ACCESS_TOKEN
+python -m simulator.cli password-spray --token YOUR_ANALYST_OR_ADMIN_ACCESS_TOKEN
+python -m simulator.cli api-volume --token YOUR_ANALYST_OR_ADMIN_ACCESS_TOKEN
+python -m simulator.cli suspicious-success --token YOUR_ANALYST_OR_ADMIN_ACCESS_TOKEN
 ```
 
 Refresh `http://localhost:3000`. Normal events appear without an alert. The brute-force scenario adds ten failed authentication events from reserved IP `198.51.100.42`, produces one HIGH alert, and links those events as evidence on the alert detail page.

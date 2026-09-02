@@ -31,6 +31,9 @@ Responses include `X-Request-ID`; callers may provide the header to correlate a 
 
 An authentication failure is represented as `event_type: "authentication"` and `outcome: "failure"`. Timestamps must include a timezone, IP addresses are normalized, and metadata is limited to 16 KiB.
 
+Enabled rules detect brute force, password spraying, unusual API volume, and a successful login after
+repeated failures. Thresholds and windows are typed environment settings.
+
 ## Alerts and dashboard
 
 - `GET /api/v1/alerts` accepts `limit`, `severity`, `status`, and `rule` filters.

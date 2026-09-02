@@ -15,7 +15,10 @@ class AlertRepository:
     async def upsert_finding(self, finding: DetectionFinding) -> Alert:
         alert = await self.session.scalar(
             select(Alert)
-            .where(Alert.deduplication_key == finding.deduplication_key)
+            .where(
+                Alert.deduplication_key == finding.deduplication_key,
+                Alert.status.in_([AlertStatus.OPEN, AlertStatus.INVESTIGATING]),
+            )
             .options(selectinload(Alert.evidence))
         )
         if alert is None:

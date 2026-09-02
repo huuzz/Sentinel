@@ -19,6 +19,7 @@ class DashboardSummary(BaseModel):
     total_events: int
     alerts_today: int
     alerts_by_severity: list[NamedCount]
+    alerts_by_rule: list[NamedCount]
     common_event_types: list[NamedCount]
     event_volume: list[TimeCount]
     recent_alerts: list[AlertResponse]

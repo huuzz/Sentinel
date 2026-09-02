@@ -28,7 +28,7 @@ def test_brute_force_returns_explainable_finding() -> None:
     finding = BruteForceRule(10, 120).evaluate(events[-1], events)
     assert finding is not None
     assert finding.rule_id == "brute_force"
-    assert finding.risk_score == 80.0
+    assert finding.risk_score == 88.0
     assert len(finding.events) == 10
     assert "198.51.100.42" in finding.deduplication_key
 

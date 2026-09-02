@@ -31,6 +31,11 @@ async def dashboard_summary(session: DatabaseSession, _: ViewerUser) -> Dashboar
     severity_rows = await session.execute(
         select(Alert.severity, func.count(Alert.id)).group_by(Alert.severity)
     )
+    rule_rows = await session.execute(
+        select(Alert.detection_rule, func.count(Alert.id))
+        .group_by(Alert.detection_rule)
+        .order_by(desc(func.count(Alert.id)))
+    )
     type_rows = await session.execute(
         select(SecurityEvent.event_type, func.count(SecurityEvent.id))
         .group_by(SecurityEvent.event_type)
@@ -49,6 +54,7 @@ async def dashboard_summary(session: DatabaseSession, _: ViewerUser) -> Dashboar
         total_events=total_events,
         alerts_today=alerts_today,
         alerts_by_severity=[NamedCount(name=row[0].value, count=row[1]) for row in severity_rows],
+        alerts_by_rule=[NamedCount(name=row[0], count=row[1]) for row in rule_rows],
         common_event_types=[NamedCount(name=row[0], count=row[1]) for row in type_rows],
         event_volume=[TimeCount(timestamp=row[0], count=row[1]) for row in volume_rows],
         recent_alerts=[AlertResponse.model_validate(alert) for alert in recent],

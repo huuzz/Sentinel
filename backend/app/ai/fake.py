@@ -12,13 +12,19 @@ class DeterministicFakeAnalyzer:
         user_text = (
             f"{len(users)} user identity" if len(users) == 1 else f"{len(users)} user identities"
         )
+        attack_labels = {
+            "brute_force": "Credential brute-force attempt",
+            "password_spray": "Password-spraying attempt",
+            "api_volume_abuse": "Automated API-volume abuse",
+            "failed_login_then_success": "Potential account compromise",
+        }
         return AnalysisResult(
             summary=(
                 f"Rule {context.rule_id} identified {len(context.evidence)} related events "
                 f"involving {source_text} and {user_text}. Review the evidence before deciding "
                 "whether this activity is malicious."
             ),
-            likely_attack="Credential brute-force attempt",
+            likely_attack=attack_labels.get(context.rule_id, "Suspicious activity"),
             confidence=min(0.95, 0.55 + len(context.evidence) * 0.03),
             evidence_references=[item.id for item in context.evidence],
             recommended_actions=[

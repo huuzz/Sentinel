@@ -61,7 +61,17 @@ async def update_alert(
     if alert is None:
         raise HTTPException(status_code=404, detail="Alert not found")
     old_status = alert.status
+    if old_status in {AlertStatus.RESOLVED, AlertStatus.DISMISSED} and payload.status in {
+        AlertStatus.OPEN,
+        AlertStatus.INVESTIGATING,
+    }:
+        raise HTTPException(status_code=409, detail="Closed alerts cannot be reopened")
     alert.status = payload.status
+    if payload.status in {AlertStatus.RESOLVED, AlertStatus.DISMISSED} and old_status not in {
+        AlertStatus.RESOLVED,
+        AlertStatus.DISMISSED,
+    }:
+        alert.deduplication_key = f"{alert.deduplication_key}:closed:{alert.id}"
     session.add(
         AuditLog(
             actor_user_id=user.id,

@@ -6,8 +6,8 @@ from app.models.alert import AlertSeverity
 from app.models.security_event import SecurityEvent
 
 
-class BruteForceRule:
-    rule_id = "brute_force"
+class PasswordSprayRule:
+    rule_id = "password_spray"
     rule_version = "1.0"
 
     def __init__(self, threshold: int, window_seconds: int) -> None:
@@ -29,19 +29,22 @@ class BruteForceRule:
             if event.event_type == "authentication"
             and event.outcome == "failure"
             and event.source_ip == current.source_ip
+            and event.user_identifier
         ]
-        if len(matching) < self.threshold:
+        identities = {event.user_identifier for event in matching}
+        if len(identities) < self.threshold:
             return None
+        severity = AlertSeverity.HIGH
         return DetectionFinding(
             rule_id=self.rule_id,
             rule_version=self.rule_version,
-            title="Possible brute-force authentication attack",
+            title="Possible password-spraying attack",
             description=(
-                f"Detected {len(matching)} failed authentication attempts from "
-                f"{current.source_ip} within {timedelta(seconds=self.window_seconds)}."
+                f"Detected failed authentication attempts against {len(identities)} identities "
+                f"from {current.source_ip} within {timedelta(seconds=self.window_seconds)}."
             ),
-            severity=AlertSeverity.HIGH,
-            risk_score=calculate_risk(AlertSeverity.HIGH, 0.8, len(matching)),
+            severity=severity,
+            risk_score=calculate_risk(severity, 0.85, len(matching)),
             deduplication_key=f"{self.rule_id}:{current.source_ip}",
             events=matching,
         )

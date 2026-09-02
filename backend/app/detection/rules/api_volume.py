@@ -6,8 +6,8 @@ from app.models.alert import AlertSeverity
 from app.models.security_event import SecurityEvent
 
 
-class BruteForceRule:
-    rule_id = "brute_force"
+class APIVolumeRule:
+    rule_id = "api_volume_abuse"
     rule_version = "1.0"
 
     def __init__(self, threshold: int, window_seconds: int) -> None:
@@ -17,31 +17,26 @@ class BruteForceRule:
     def evaluate(
         self, current: SecurityEvent, events: list[SecurityEvent]
     ) -> DetectionFinding | None:
-        if (
-            current.event_type != "authentication"
-            or current.outcome != "failure"
-            or not current.source_ip
-        ):
+        if current.event_type != "api_request" or not current.source_ip:
             return None
         matching = [
             event
             for event in events
-            if event.event_type == "authentication"
-            and event.outcome == "failure"
-            and event.source_ip == current.source_ip
+            if event.event_type == "api_request" and event.source_ip == current.source_ip
         ]
         if len(matching) < self.threshold:
             return None
+        severity = AlertSeverity.MEDIUM
         return DetectionFinding(
             rule_id=self.rule_id,
             rule_version=self.rule_version,
-            title="Possible brute-force authentication attack",
+            title="Unusually high API request volume",
             description=(
-                f"Detected {len(matching)} failed authentication attempts from "
-                f"{current.source_ip} within {timedelta(seconds=self.window_seconds)}."
+                f"Detected {len(matching)} API requests from {current.source_ip} "
+                f"within {timedelta(seconds=self.window_seconds)}."
             ),
-            severity=AlertSeverity.HIGH,
-            risk_score=calculate_risk(AlertSeverity.HIGH, 0.8, len(matching)),
+            severity=severity,
+            risk_score=calculate_risk(severity, 0.7, len(matching)),
             deduplication_key=f"{self.rule_id}:{current.source_ip}",
             events=matching,
         )

@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Select, and_, select
+from sqlalchemy import Select, and_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.security_event import SecurityEvent
@@ -36,6 +36,27 @@ class EventRepository:
             )
             .order_by(SecurityEvent.timestamp, SecurityEvent.id)
             .limit(1000)
+        )
+        return list(result)
+
+    async def recent_related(
+        self, event: SecurityEvent, start: datetime, limit: int = 10_000
+    ) -> list[SecurityEvent]:
+        related = []
+        if event.source_ip:
+            related.append(SecurityEvent.source_ip == event.source_ip)
+        if event.user_identifier:
+            related.append(SecurityEvent.user_identifier == event.user_identifier)
+        query = select(SecurityEvent).where(
+            SecurityEvent.timestamp >= start,
+            SecurityEvent.timestamp <= event.timestamp,
+        )
+        if related:
+            query = query.where(or_(*related))
+        else:
+            query = query.where(SecurityEvent.id == event.id)
+        result = await self.session.scalars(
+            query.order_by(SecurityEvent.timestamp, SecurityEvent.id).limit(limit)
         )
         return list(result)
 
