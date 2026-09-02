@@ -2,7 +2,7 @@
 
 SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
 
-> **Status:** Milestone 2 authentication, RBAC, and audit logging. AI and ML are scheduled for later milestones.
+> **Status:** Milestone 3 advisory AI analyst. ML and grounded knowledge are scheduled for later milestones.
 
 ## Current features
 
@@ -18,6 +18,7 @@ SentinelAI is an explainable security monitoring and threat-analysis platform bu
 - Analyst dashboard, event list, alert list, and investigation view
 - Safe `normal` and `brute-force` synthetic simulator scenarios
 - Argon2id authentication, rotating refresh sessions, role enforcement, and audit logging
+- Deterministic local AI analyst with validated summaries, evidence citations, and recommended actions
 
 ## Architecture
 

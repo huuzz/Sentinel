@@ -17,3 +17,7 @@ Assets include user identities, refresh tokens, security telemetry, alerts, AI a
 | Supply-chain compromise | Malicious dependency or image | Lockfiles, review, dependency/secret scanning, pinned CI actions |
 
 The AI is an explanation assistant, not a detector or remediation agent. A human remains in control.
+
+Milestone 3 implements this boundary with allowlisted event fields, bounded context/output, evidence
+reference validation, a provider-neutral interface, and a deterministic offline provider for tests and
+local demonstrations.

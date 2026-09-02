@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.api.routes.alerts import router as alerts_router
+from app.api.routes.analysis import router as analysis_router
 from app.api.routes.audit import router as audit_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.dashboard import router as dashboard_router
@@ -34,6 +35,7 @@ app.include_router(users_router)
 app.include_router(audit_router)
 app.include_router(events_router)
 app.include_router(alerts_router)
+app.include_router(analysis_router)
 app.include_router(dashboard_router)
 
 

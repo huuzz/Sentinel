@@ -38,4 +38,12 @@ An authentication failure is represented as `event_type: "authentication"` and `
 - `PATCH /api/v1/alerts/{alert_id}` updates status for analysts and administrators.
 - `GET /api/v1/dashboard/summary` returns totals, severity counts, common event types, hourly volume, and recent alerts.
 
+## Advisory AI analysis
+
+- `POST /api/v1/alerts/{alert_id}/analysis` creates or replaces an analysis for ANALYST and ADMIN.
+- `GET /api/v1/alerts/{alert_id}/analysis` reads the saved analysis for every authenticated role.
+
+The response contains a bounded summary, likely attack label, confidence from 0 to 1, evidence event
+IDs, recommended human actions, and provider/model metadata. It contains no hidden reasoning.
+
 The initial brute-force rule creates a HIGH alert after ten failures from one source IP inside two minutes. While that finding remains open, subsequent matching evidence is attached to the same alert instead of creating an alert storm.

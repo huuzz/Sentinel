@@ -31,4 +31,3 @@ class AlertListResponse(BaseModel):
 
 class AlertUpdate(BaseModel):
     status: AlertStatus
-    next_cursor: str | None = None

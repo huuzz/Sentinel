@@ -20,4 +20,9 @@ Sensitive endpoints will receive rate and body-size limits.
 
 AI context will contain allowlisted, minimal alert data. Untrusted event text is delimited as data, never instructions. Output is schema-validated and bounded; models receive no secrets or tools and can never remediate automatically. Logs must not contain passwords, tokens, cookies, secrets, or full prompts.
 
+The Milestone 3 analyzer receives only alert fields and explicitly selected evidence attributes; event
+metadata is excluded. Returned evidence IDs must belong to the analyzed alert. The local fake provider
+is deterministic and does not make network calls. Analyses are advisory, never trigger tools or
+remediation, and store only user-facing output—not prompts or chain-of-thought.
+
 Development Compose credentials are not production credentials. Production requires unique secrets, TLS, secure cookies, restricted network access, and a migration procedure.
