@@ -2,7 +2,8 @@
 
 SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
 
-> **Status:** Milestone 7 security hardening implemented; hosted scan results require review.
+> **Status:** Milestone 8 cloud design documented. Local application runs through Milestone 7;
+> cloud configuration/provisioning is not approved and hosted security scan results require review.
 
 ## Current features
 
@@ -37,6 +38,10 @@ flowchart LR
 ```
 
 The application is a modular monolith. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for boundaries and decisions.
+
+The [cloud deployment design](docs/CLOUD_DEPLOYMENT_DESIGN.md) compares hosting costs and proposes
+Render with managed PostgreSQL. It covers networking, secrets, migrations, recovery, and approval
+gates. No paid resources or deployment configuration have been created.
 
 ## Quick start with Docker
 

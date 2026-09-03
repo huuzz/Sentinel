@@ -8,5 +8,5 @@
 - [x] **Milestone 5 — ML:** reproducible Isolation Forest pipeline and advisory anomaly scores.
 - [x] **Milestone 6 — RAG:** pgvector retrieval with source attribution.
 - [x] **Milestone 7 — Hardening:** rate limits, headers, scanner workflows, and threat-model review; review hosted scan findings before deployment.
-- [ ] **Milestone 8 — Cloud design:** intentionally selected low-cost architecture; no unapproved provisioning.
+- [x] **Milestone 8 — Cloud design:** Render design and cost comparison documented; configuration, spend, and provisioning await explicit approval.
 - [ ] **Milestone 9 — Portfolio polish:** screenshots, demo material, interview notes, and clean-checkout verification.
