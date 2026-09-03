@@ -1,7 +1,7 @@
 [project]
 name = "sentinelai-backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Explainable security monitoring with deterministic detection and advisory analysis"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

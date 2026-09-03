@@ -1,9 +1,14 @@
 # SentinelAI
 
-SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
+SentinelAI is an educational security monitoring platform. It collects synthetic telemetry,
+creates deterministic alerts with linked evidence, and adds advisory local AI explanations,
+synthetic-data anomaly scoring, and cited knowledge retrieval. It never performs remediation.
 
 > **Status:** Milestone 8 cloud design documented. Local application runs through Milestone 7;
 > cloud configuration/provisioning is not approved and hosted security scan results require review.
+
+Milestone 9 portfolio work is in progress. Start with the [repeatable demo](docs/DEMO.md)
+and [interview notes and known limitations](docs/PORTFOLIO.md).
 
 ## Current features
 
@@ -53,6 +58,9 @@ cp .env.example .env
 docker compose up --build
 ```
 
+On Windows PowerShell, use `Copy-Item .env.example .env` for the copy command.
+Docker Desktop must be running with virtualization/WSL support enabled.
+
 Open the frontend at `http://localhost:3000`, API docs at `http://localhost:8000/docs`, and liveness endpoint at `http://localhost:8000/health/live`.
 
 Create the first administrator in another terminal (the password is prompted and never logged):
@@ -65,11 +73,16 @@ Stop with `docker compose down`. Use `docker compose down -v` only when intentio
 
 ## Local development
 
-Backend requires Python 3.11+, uv, and a reachable PostgreSQL database:
+Backend requires Python 3.11+, uv, and a separately reachable PostgreSQL database
+with pgvector installed. Compose PostgreSQL is intentionally not published to the host;
+use the Docker workflow above unless you have configured a development database.
+Set `SENTINEL_DATABASE_URL` in the shell or `backend/.env` to its asyncpg URL.
+The root `.env` is used by Compose, not automatically by a process started in `backend/`.
 
 ```bash
 cd backend
-uv sync
+uv sync --locked
+uv run alembic upgrade head
 uv run uvicorn app.main:app --reload
 ```
 
@@ -112,6 +125,15 @@ Administrators can ingest authored, public, or user-authorized knowledge through
 the local deterministic provider requires no paid API and every response exposes its source excerpts.
 
 ## Demo workflow
+
+For a repeatable, token-free development dataset, use:
+
+```sh
+docker compose exec backend python -m scripts.seed_demo --confirm-synthetic
+```
+
+See [docs/DEMO.md](docs/DEMO.md) for expected counts, rerun behavior, and the recording script.
+The HTTP simulator below remains available for testing the authenticated API path.
 
 With the stack running, open a second terminal at the repository root:
 
