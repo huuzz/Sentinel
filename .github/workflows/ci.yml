@@ -7,6 +7,19 @@ permissions:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_DB: sentinel_test
+          POSTGRES_USER: sentinel
+          POSTGRES_PASSWORD: ci-test-only
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U sentinel -d sentinel_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      SENTINEL_DATABASE_URL: postgresql+asyncpg://sentinel:ci-test-only@localhost:5432/sentinel_test
     defaults:
       run:
         working-directory: backend
@@ -20,6 +33,8 @@ jobs:
       - run: uv run mypy app tests
       - run: uv run pytest
       - run: uv run alembic upgrade head --sql > /tmp/migration.sql
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
   frontend:
     runs-on: ubuntu-latest
     defaults:

@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Index, String
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Index, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -18,6 +18,7 @@ class UserRole(enum.StrEnum):
 
 class User(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "users"
+    __table_args__ = (UniqueConstraint("email"),)
 
     email: Mapped[str] = mapped_column(String(254), unique=True, index=True)
     password_hash: Mapped[str] = mapped_column(String(255))

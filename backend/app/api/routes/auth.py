@@ -90,7 +90,9 @@ async def refresh(
     if not sentinel_refresh:
         raise HTTPException(status_code=401, detail="Refresh token required")
     digest = token_hash(sentinel_refresh)
-    record = await session.scalar(select(RefreshToken).where(RefreshToken.token_hash == digest))
+    record = await session.scalar(
+        select(RefreshToken).where(RefreshToken.token_hash == digest).with_for_update()
+    )
     if record is None:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
     if record.revoked_at is not None:
@@ -127,7 +129,7 @@ async def logout(
         record = await session.scalar(
             select(RefreshToken).where(RefreshToken.token_hash == token_hash(sentinel_refresh))
         )
-        if record:
+        if record and record.user_id == user.id:
             await session.execute(
                 update(RefreshToken)
                 .where(

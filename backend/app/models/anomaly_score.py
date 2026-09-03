@@ -1,7 +1,7 @@
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Float, ForeignKey, String
+from sqlalchemy import Boolean, Float, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, CreatedAtMixin, UUIDPrimaryKeyMixin
@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
 class AnomalyScore(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "anomaly_scores"
+    __table_args__ = (UniqueConstraint("event_id"),)
 
     event_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("security_events.id", ondelete="CASCADE"), unique=True, index=True

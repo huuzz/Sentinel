@@ -25,3 +25,11 @@ local demonstrations.
 Milestone 6 restricts knowledge ingestion to administrators and records attribution and authorization
 type. Questions and excerpts remain bounded untrusted data, retrieval returns at most five citations,
 and the answer generator has no credentials, tools, or remediation authority.
+
+Milestone 7 adds streamed body caps at both HTTP boundaries, bounded process-local throttling,
+validated proxy trust, production configuration guards, security response headers, capability
+restrictions, and supply-chain workflows. Validation errors omit submitted values. Refresh-token
+rotation locks rows, and logout only revokes tokens belonging to the authenticated user. Remaining
+risks include shared proxy quotas, limiter reset on restart, lack of distributed rate enforcement,
+synthetic ML validity, and human review of AI/RAG output. TLS, gateway limits, backup recovery, and
+least-privileged production database roles must be reviewed before any public deployment.

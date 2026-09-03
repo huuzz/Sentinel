@@ -22,6 +22,19 @@ async def test_liveness() -> None:
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "service": "sentinelai-backend"}
     assert response.headers["x-request-id"]
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["x-frame-options"] == "DENY"
+
+
+async def test_oversized_request_is_rejected() -> None:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.post(
+            "/api/v1/auth/login",
+            content=b"x" * 1_048_577,
+            headers={"content-type": "application/json"},
+        )
+    assert response.status_code == 413
+    assert response.json()["error"]["code"] == "request_too_large"
 
 
 async def test_readiness_returns_503_when_database_is_unavailable() -> None:

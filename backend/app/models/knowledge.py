@@ -1,7 +1,7 @@
 import uuid
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import CheckConstraint, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, CreatedAtMixin, UUIDPrimaryKeyMixin
@@ -9,6 +9,12 @@ from app.db.base import Base, CreatedAtMixin, UUIDPrimaryKeyMixin
 
 class KnowledgeEntry(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "knowledge_entries"
+    __table_args__ = (
+        CheckConstraint(
+            "source_type IN ('authored', 'public', 'user-authorized')",
+            name="ck_knowledge_entries_source_type",
+        ),
+    )
 
     title: Mapped[str] = mapped_column(String(200))
     source_url: Mapped[str] = mapped_column(String(1000))

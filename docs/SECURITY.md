@@ -16,7 +16,8 @@ Authentication uses Argon2id, short-lived access tokens, hashed rotating refresh
 
 ## Required future controls
 
-Sensitive endpoints will receive rate and body-size limits.
+Sensitive endpoints now have rate limits and streamed body-size limits. See [HARDENING.md](HARDENING.md)
+for quotas, production settings, proxy trust, security headers, scanner workflows, and limitations.
 
 AI context will contain allowlisted, minimal alert data. Untrusted event text is delimited as data, never instructions. Output is schema-validated and bounded; models receive no secrets or tools and can never remediate automatically. Logs must not contain passwords, tokens, cookies, secrets, or full prompts.
 

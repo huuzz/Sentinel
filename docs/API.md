@@ -64,3 +64,9 @@ The initial brute-force rule creates a HIGH alert after ten failures from one so
 Source types are restricted to `authored`, `public`, and `user-authorized`. Content is capped at 20 KiB,
 split into at most 40 chunks, and always treated as untrusted data. The deterministic local generator
 does not call tools, external providers, or remediation actions.
+
+## Request hardening
+
+Oversized bodies return 413 and throttled writes return 429 with `Retry-After`. See
+[HARDENING.md](HARDENING.md) for configurable quotas and proxy limitations. Validation errors use
+`error.code`, `message`, `request_id`, and field locations/types without echoing submitted data.

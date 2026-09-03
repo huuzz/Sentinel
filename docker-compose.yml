@@ -17,13 +17,22 @@ services:
 
   backend:
     build: ./backend
-    command: ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    command: ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-proxy-headers"]
     environment:
       SENTINEL_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-sentinel}:${POSTGRES_PASSWORD:-sentinel_dev}@postgres:5432/${POSTGRES_DB:-sentinel}
-      SENTINEL_ENVIRONMENT: development
+      SENTINEL_ENVIRONMENT: ${SENTINEL_ENVIRONMENT:-development}
       SENTINEL_LOG_LEVEL: INFO
       SENTINEL_JWT_SECRET: ${SENTINEL_JWT_SECRET:-development-only-change-me-32-bytes}
-    ports: ["8000:8000"]
+      SENTINEL_REFRESH_COOKIE_SECURE: ${SENTINEL_REFRESH_COOKIE_SECURE:-false}
+      SENTINEL_MAX_REQUEST_BODY_BYTES: ${SENTINEL_MAX_REQUEST_BODY_BYTES:-1048576}
+      SENTINEL_AUTH_RATE_LIMIT: ${SENTINEL_AUTH_RATE_LIMIT:-10}
+      SENTINEL_INGESTION_RATE_LIMIT: ${SENTINEL_INGESTION_RATE_LIMIT:-120}
+      SENTINEL_AI_RATE_LIMIT: ${SENTINEL_AI_RATE_LIMIT:-10}
+      SENTINEL_ADMIN_RATE_LIMIT: ${SENTINEL_ADMIN_RATE_LIMIT:-30}
+      SENTINEL_RATE_LIMIT_WINDOW_SECONDS: ${SENTINEL_RATE_LIMIT_WINDOW_SECONDS:-60}
+      SENTINEL_CORS_ALLOWED_ORIGINS: ${SENTINEL_CORS_ALLOWED_ORIGINS:-}
+      SENTINEL_TRUSTED_PROXY_IPS: ${SENTINEL_TRUSTED_PROXY_IPS:-}
+    ports: ["127.0.0.1:8000:8000"]
     depends_on:
       postgres:
         condition: service_healthy
@@ -33,16 +42,20 @@ services:
       timeout: 3s
       retries: 5
     restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
 
   frontend:
     build: ./frontend
     environment:
       BACKEND_INTERNAL_URL: http://backend:8000
-    ports: ["3000:3000"]
+    ports: ["127.0.0.1:3000:3000"]
     depends_on:
       backend:
         condition: service_healthy
     restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
 
 volumes:
   postgres_data:
