@@ -21,3 +21,7 @@ The AI is an explanation assistant, not a detector or remediation agent. A human
 Milestone 3 implements this boundary with allowlisted event fields, bounded context/output, evidence
 reference validation, a provider-neutral interface, and a deterministic offline provider for tests and
 local demonstrations.
+
+Milestone 6 restricts knowledge ingestion to administrators and records attribution and authorization
+type. Questions and excerpts remain bounded untrusted data, retrieval returns at most five citations,
+and the answer generator has no credentials, tools, or remediation authority.

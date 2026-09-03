@@ -19,6 +19,13 @@ with an exact feature-name/schema match. Incompatible or missing models leave sc
 while event ingestion and deterministic rules continue. Scores are persisted as supplemental evidence
 and never create or change alerts.
 
+## Grounded knowledge boundary
+
+An embedding adapter converts approved, bounded chunks into 64-dimensional vectors stored beside
+relational source metadata in PostgreSQL. The retrieval service performs cosine-distance search and
+passes only selected excerpts to an answer-generator interface. The local implementation is
+deterministic; future adapters must preserve citation validation, bounds, and the zero-tools policy.
+
 SentinelAI begins as a modular monolith: one FastAPI deployment owns domain behavior and one Next.js deployment owns the interface. PostgreSQL is the only datastore. This keeps transactions, operations, and interview explanations clear while retaining internal service boundaries.
 
 ```mermaid
@@ -29,8 +36,10 @@ flowchart TD
     Services --> Detection[Detection rules]
     Services --> Repositories[Repositories]
     Repositories --> PG[(PostgreSQL)]
-    Services -. later .-> AI[AI analyzer abstraction]
-    Services -. later .-> ML[ML inference]
+    Services --> AI[AI analyzer abstraction]
+    Services --> ML[ML inference]
+    Services --> RAG[Grounded retrieval]
+    RAG --> PG
 ```
 
 Routes translate HTTP; services own use cases and transactions; repositories own queries; detection rules return typed findings without HTTP knowledge. AI and ML remain advisory. Offline ML training lives outside the runtime backend.

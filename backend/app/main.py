@@ -13,6 +13,7 @@ from app.api.routes.auth import router as auth_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.events import router as events_router
 from app.api.routes.health import router as health_router
+from app.api.routes.knowledge import router as knowledge_router
 from app.api.routes.ml import router as ml_router
 from app.api.routes.users import router as users_router
 from app.core.config import get_settings
@@ -41,6 +42,7 @@ app.include_router(events_router)
 app.include_router(alerts_router)
 app.include_router(analysis_router)
 app.include_router(ml_router)
+app.include_router(knowledge_router)
 app.include_router(dashboard_router)
 
 

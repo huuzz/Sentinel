@@ -2,7 +2,7 @@
 
 SentinelAI is an explainable security monitoring and threat-analysis platform built as a student portfolio project. It will collect synthetic security telemetry, create deterministic alerts, and later add advisory AI, anomaly detection, and grounded security knowledge.
 
-> **Status:** Milestone 5 advisory anomaly detection. Grounded knowledge is scheduled for a later milestone.
+> **Status:** Milestone 6 grounded knowledge retrieval with pgvector and source attribution.
 
 ## Current features
 
@@ -21,6 +21,7 @@ SentinelAI is an explainable security monitoring and threat-analysis platform bu
 - Deterministic local AI analyst with validated summaries, evidence citations, and recommended actions
 - Password-spray, API-volume, and suspicious-success rules with centralized risk scoring
 - Versioned Isolation Forest anomaly scores trained on reproducible synthetic data
+- Bounded pgvector retrieval over approved knowledge with explicit citations
 
 ## Architecture
 
@@ -99,6 +100,10 @@ uv run python ../ml/training/train.py
 ```
 
 The data is synthetic and the resulting anomaly score is not an attack probability.
+
+Administrators can ingest authored, public, or user-authorized knowledge through
+`POST /api/v1/knowledge/entries`. Signed-in users can ask grounded questions on the Knowledge page;
+the local deterministic provider requires no paid API and every response exposes its source excerpts.
 
 ## Demo workflow
 

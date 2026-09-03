@@ -33,3 +33,10 @@ Only the repository-owned, checksum-verified joblib artifact is loaded. Feature-
 missing files, and checksum failures leave ML unavailable without blocking event ingestion. Never load
 user-supplied serialized models. Anomaly scores are advisory and must not be described as attack
 probabilities or autonomous alert decisions.
+
+## Grounded knowledge safety
+
+Only administrators ingest sources, and each entry must be classified as authored, public, or
+user-authorized. Questions, documents, and retrieved excerpts are bounded untrusted data. Retrieval
+returns at most five attributed chunks. The local generator receives no tools or secrets, performs no
+actions, and stores no hidden reasoning. Users must verify cited material before acting.

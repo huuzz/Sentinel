@@ -54,3 +54,13 @@ The response contains a bounded summary, likely attack label, confidence from 0 
 IDs, recommended human actions, and provider/model metadata. It contains no hidden reasoning.
 
 The initial brute-force rule creates a HIGH alert after ten failures from one source IP inside two minutes. While that finding remains open, subsequent matching evidence is attached to the same alert instead of creating an alert storm.
+
+## Grounded knowledge
+
+- `POST /api/v1/knowledge/entries` ingests an approved source for administrators.
+- `GET /api/v1/knowledge/entries` lists source metadata for authenticated users.
+- `POST /api/v1/knowledge/ask` retrieves one to five relevant chunks and returns a bounded answer with citations.
+
+Source types are restricted to `authored`, `public`, and `user-authorized`. Content is capped at 20 KiB,
+split into at most 40 chunks, and always treated as untrusted data. The deterministic local generator
+does not call tools, external providers, or remediation actions.

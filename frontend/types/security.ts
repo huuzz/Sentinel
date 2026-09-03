@@ -5,3 +5,6 @@ export interface Alert { id:string; title:string; description:string; severity:S
 export interface AlertDetail extends Alert { supporting_events:SecurityEvent[] }
 export interface DashboardSummary { total_events:number; alerts_today:number; alerts_by_severity:{name:string;count:number}[]; alerts_by_rule:{name:string;count:number}[]; common_event_types:{name:string;count:number}[]; event_volume:{timestamp:string;count:number}[]; recent_alerts:Alert[]; }
 export interface AIAnalysis { id:string; alert_id:string; summary:string; likely_attack:string; confidence:number; evidence_references:string[]; recommended_actions:string[]; provider:string; model:string; created_at:string; }
+export interface KnowledgeEntry { id:string; title:string; source_url:string; source_type:"authored"|"public"|"user-authorized"; created_at:string; chunk_count:number; }
+export interface KnowledgeCitation { entry_id:string; chunk_id:string; title:string; source_url:string; excerpt:string; relevance:number; }
+export interface KnowledgeAnswer { answer:string; citations:KnowledgeCitation[]; provider:string; }
