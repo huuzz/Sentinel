@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     access_token_minutes: int = Field(default=15, ge=1, le=60)
     refresh_token_days: int = Field(default=7, ge=1, le=30)
     refresh_cookie_secure: bool = False
+    ml_enabled: bool = True
+    ml_model_path: str = "app/ml/artifacts/isolation_forest_v1.joblib"
 
 
 @lru_cache

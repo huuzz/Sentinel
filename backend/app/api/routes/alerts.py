@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.api.dependencies import AnalystUser, ViewerUser
 from app.api.routes.events import event_response
@@ -45,6 +46,7 @@ async def get_alert(
         await session.scalars(
             select(SecurityEvent)
             .where(SecurityEvent.id.in_(event_ids))
+            .options(selectinload(SecurityEvent.anomaly_score))
             .order_by(SecurityEvent.timestamp)
         )
     )

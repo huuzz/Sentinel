@@ -34,6 +34,10 @@ An authentication failure is represented as `event_type: "authentication"` and `
 Enabled rules detect brute force, password spraying, unusual API volume, and a successful login after
 repeated failures. Thresholds and windows are typed environment settings.
 
+Event responses may include `anomaly_score`, `is_anomaly`, and `anomaly_model_version`. These fields
+are supplemental evidence and never create alerts. `GET /api/v1/ml/status` reports model availability
+and feature-schema compatibility.
+
 ## Alerts and dashboard
 
 - `GET /api/v1/alerts` accepts `limit`, `severity`, `status`, and `rule` filters.

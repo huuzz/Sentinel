@@ -5,7 +5,7 @@
 - [x] **Milestone 2 — Authentication/RBAC:** bootstrap admin, rotating sessions, roles, and audit logs.
 - [x] **Milestone 3 — AI analyst:** provider abstraction, structured explanations, and prompt-injection defenses.
 - [x] **Milestone 4 — Detection expansion:** password spray, API abuse, suspicious success, and risk scoring.
-- [ ] **Milestone 5 — ML:** reproducible Isolation Forest pipeline and advisory anomaly scores.
+- [x] **Milestone 5 — ML:** reproducible Isolation Forest pipeline and advisory anomaly scores.
 - [ ] **Milestone 6 — RAG:** pgvector retrieval with source attribution.
 - [ ] **Milestone 7 — Hardening:** rate limits, headers, scans, and threat-model review.
 - [ ] **Milestone 8 — Cloud design:** intentionally selected low-cost architecture; no unapproved provisioning.

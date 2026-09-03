@@ -10,6 +10,8 @@ from app.detection.rules import (
     PasswordSprayRule,
     SuspiciousSuccessRule,
 )
+from app.ml.runtime import ml_runtime
+from app.models.anomaly_score import AnomalyScore
 from app.models.security_event import SecurityEvent
 from app.repositories.alerts import AlertRepository
 from app.repositories.events import EventRepository
@@ -21,6 +23,7 @@ class IngestionService:
         self.session = session
         self.events = EventRepository(session)
         self.alerts = AlertRepository(session)
+        self.settings = settings
         self.rules: list[DetectionRule] = [
             BruteForceRule(settings.brute_force_threshold, settings.brute_force_window_seconds),
             PasswordSprayRule(
@@ -36,6 +39,14 @@ class IngestionService:
     async def ingest(self, payload: SecurityEventCreate) -> tuple[SecurityEvent, list[str]]:
         async with self.session.begin():
             event = await self.events.create(payload)
+            inference = ml_runtime.predict(event) if self.settings.ml_enabled else None
+            if inference:
+                event.anomaly_score = AnomalyScore(
+                    score=inference.score,
+                    is_anomaly=inference.is_anomaly,
+                    model_version=inference.model_version,
+                    feature_schema_version=inference.feature_schema_version,
+                )
             alert_ids: list[str] = []
             max_window = max(rule.window_seconds for rule in self.rules)
             recent = await self.events.recent_related(

@@ -1,0 +1,16 @@
+{
+  "seed": 42,
+  "rows": 2000,
+  "synthetic_anomalies": 100,
+  "model_version": "isolation-forest-synthetic-v1",
+  "feature_schema_version": "1.0",
+  "feature_names": [
+    "hour_sin",
+    "hour_cos",
+    "is_failure",
+    "is_server_error",
+    "has_user",
+    "endpoint_length"
+  ],
+  "limitations": "Synthetic educational data is not representative of production traffic."
+}

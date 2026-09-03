@@ -3,6 +3,7 @@ from datetime import datetime
 
 from sqlalchemy import Select, and_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.models.security_event import SecurityEvent
 from app.schemas.events import SecurityEventCreate
@@ -20,7 +21,12 @@ class EventRepository:
         return event
 
     async def get(self, event_id: uuid.UUID) -> SecurityEvent | None:
-        return await self.session.get(SecurityEvent, event_id)
+        result: SecurityEvent | None = await self.session.scalar(
+            select(SecurityEvent)
+            .where(SecurityEvent.id == event_id)
+            .options(selectinload(SecurityEvent.anomaly_score))
+        )
+        return result
 
     async def recent_failures(
         self, source_ip: str, start: datetime, end: datetime
@@ -69,7 +75,9 @@ class EventRepository:
         user_identifier: str | None,
         source: str | None,
     ) -> list[SecurityEvent]:
-        query: Select[tuple[SecurityEvent]] = select(SecurityEvent)
+        query: Select[tuple[SecurityEvent]] = select(SecurityEvent).options(
+            selectinload(SecurityEvent.anomaly_score)
+        )
         filters = []
         if event_type:
             filters.append(SecurityEvent.event_type == event_type)

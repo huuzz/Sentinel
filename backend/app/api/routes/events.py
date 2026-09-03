@@ -23,6 +23,7 @@ AppSettings = Annotated[Settings, Depends(get_settings)]
 
 
 def event_response(event: SecurityEvent) -> SecurityEventResponse:
+    anomaly = event.anomaly_score
     return SecurityEventResponse.model_validate(
         {
             "id": event.id,
@@ -38,6 +39,9 @@ def event_response(event: SecurityEvent) -> SecurityEventResponse:
             "metadata": event.event_metadata,
             "simulated": event.simulated,
             "created_at": event.created_at,
+            "anomaly_score": anomaly.score if anomaly else None,
+            "is_anomaly": anomaly.is_anomaly if anomaly else None,
+            "anomaly_model_version": anomaly.model_version if anomaly else None,
         }
     )
 

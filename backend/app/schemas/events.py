@@ -44,6 +44,9 @@ class SecurityEventResponse(SecurityEventCreate):
     model_config = ConfigDict(from_attributes=True)
     id: uuid.UUID
     created_at: datetime
+    anomaly_score: float | None = Field(default=None, ge=0, le=1)
+    is_anomaly: bool | None = None
+    anomaly_model_version: str | None = None
 
 
 class EventIngestResponse(BaseModel):

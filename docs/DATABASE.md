@@ -1,5 +1,9 @@
 # Database
 
+`anomaly_scores` has a one-to-one relationship with `security_events` and records the bounded score,
+advisory anomaly flag, model version, and feature-schema version. It is intentionally separate from
+alerts: deterministic rules remain the only alert source.
+
 Milestone 1 creates the core security tables through Alembic. Every schema change must be represented by a migration and tested from an empty database.
 
 Core relationships:

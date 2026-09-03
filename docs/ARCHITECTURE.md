@@ -11,6 +11,14 @@ Risk scores are explanatory prioritization, not probability. Each score combines
 severity base (LOW 20, MEDIUM 45, HIGH 70, CRITICAL 85), up to 10 confidence points, and up to 10
 points for evidence volume, capped at 100.
 
+## Advisory ML boundary
+
+Offline training generates a versioned Isolation Forest bundle from seeded synthetic data. Runtime
+feature extraction has its own schema version; startup accepts only a checksum-matching bundled model
+with an exact feature-name/schema match. Incompatible or missing models leave scoring unavailable
+while event ingestion and deterministic rules continue. Scores are persisted as supplemental evidence
+and never create or change alerts.
+
 SentinelAI begins as a modular monolith: one FastAPI deployment owns domain behavior and one Next.js deployment owns the interface. PostgreSQL is the only datastore. This keeps transactions, operations, and interview explanations clear while retaining internal service boundaries.
 
 ```mermaid

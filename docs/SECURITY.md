@@ -26,3 +26,10 @@ is deterministic and does not make network calls. Analyses are advisory, never t
 remediation, and store only user-facing output—not prompts or chain-of-thought.
 
 Development Compose credentials are not production credentials. Production requires unique secrets, TLS, secure cookies, restricted network access, and a migration procedure.
+
+## ML artifact safety
+
+Only the repository-owned, checksum-verified joblib artifact is loaded. Feature-schema mismatches,
+missing files, and checksum failures leave ML unavailable without blocking event ingestion. Never load
+user-supplied serialized models. Anomaly scores are advisory and must not be described as attack
+probabilities or autonomous alert decisions.

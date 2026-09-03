@@ -1,11 +1,14 @@
 from datetime import datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from sqlalchemy import Boolean, DateTime, Index, Integer, String
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, CreatedAtMixin, UUIDPrimaryKeyMixin
+
+if TYPE_CHECKING:
+    from app.models.anomaly_score import AnomalyScore
 
 
 class SecurityEvent(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
@@ -28,3 +31,6 @@ class SecurityEvent(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
         "metadata", JSONB, default=dict, nullable=False
     )
     simulated: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    anomaly_score: Mapped["AnomalyScore | None"] = relationship(
+        back_populates="event", uselist=False, lazy="selectin", cascade="all, delete-orphan"
+    )

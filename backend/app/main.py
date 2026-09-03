@@ -13,10 +13,12 @@ from app.api.routes.auth import router as auth_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.api.routes.events import router as events_router
 from app.api.routes.health import router as health_router
+from app.api.routes.ml import router as ml_router
 from app.api.routes.users import router as users_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
 from app.db.session import close_engine
+from app.ml.runtime import ml_runtime
 
 settings = get_settings()
 configure_logging(settings)
@@ -24,6 +26,8 @@ configure_logging(settings)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    if settings.ml_enabled:
+        ml_runtime.load(settings.ml_model_path)
     yield
     await close_engine()
 
@@ -36,6 +40,7 @@ app.include_router(audit_router)
 app.include_router(events_router)
 app.include_router(alerts_router)
 app.include_router(analysis_router)
+app.include_router(ml_router)
 app.include_router(dashboard_router)
 
 
