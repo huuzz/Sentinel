@@ -4,11 +4,13 @@ SentinelAI is an educational security monitoring platform. It collects synthetic
 creates deterministic alerts with linked evidence, and adds advisory local AI explanations,
 synthetic-data anomaly scoring, and cited knowledge retrieval. It never performs remediation.
 
-> **Status:** Milestone 8 cloud design documented. Local application runs through Milestone 7;
-> cloud configuration/provisioning is not approved and hosted security scan results require review.
+> **Status:** Milestone 9 portfolio demo complete and locally verified. Cloud deployment
+> remains design-only; provisioning is not approved and hosted security scan results require review.
 
-Milestone 9 portfolio work is in progress. Start with the [repeatable demo](docs/DEMO.md)
+Start with the [repeatable demo](docs/DEMO.md), [verification record](docs/VERIFICATION.md),
 and [interview notes and known limitations](docs/PORTFOLIO.md).
+
+![SentinelAI running locally with synthetic telemetry](docs/images/dashboard.jpg)
 
 ## Current features
 

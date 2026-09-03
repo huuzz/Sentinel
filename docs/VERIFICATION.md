@@ -1,6 +1,6 @@
 # Verification record
 
-Milestone 9 verification is in progress (2026-09-03). This document distinguishes
+Milestone 9 local verification completed on 2026-09-03. This document distinguishes
 local results from pending checks; configured CI is not proof of a passing hosted run.
 
 ## Completed locally
@@ -11,16 +11,36 @@ local results from pending checks; configured CI is not proof of a passing hoste
 
 ## Release checklist
 
-- [ ] Docker rebuild and health checks after the final changes.
-- [ ] Seed an empty PostgreSQL database, verify 45 events and two alerts.
+- [x] Docker rebuild and health checks after the final changes.
+- [x] Seed an empty PostgreSQL database, verify 45 events and two alerts.
 - [x] Seed again and verify event/evidence/alert counts do not increase.
-- [ ] Capture actual dashboard and evidence screenshots using synthetic data.
-- [ ] Verify locked installs and setup from a clean checkout.
+- [x] Capture actual dashboard and evidence screenshots using synthetic data.
+- [x] Verify locked installs and quality checks from a clean checkout.
 - [ ] Review hosted CI and security scanner findings before deployment.
 
 Existing-database seed verification: 45 events added; HIGH brute-force evidence count
 10, MEDIUM API-volume evidence count 30. Second run added zero events and touched zero
 alerts. The original 78 synthetic events were preserved.
+
+Isolated PostgreSQL database `sentinel_m9_verify`: migrations reached `20260903_06`;
+seed created exactly 45 events, two alerts (HIGH and MEDIUM), and 40 evidence links.
+A second invocation added zero events and touched zero alerts.
+
+A clean local clone of commit `13a8843` passed `uv sync --locked`, Ruff, strict mypy,
+and all 56 backend tests with no cache warning. Its frontend passed `npm ci`, ESLint,
+TypeScript, both component tests, and the production build. npm reported no known
+dependency vulnerabilities at install time, but emitted ESLint and whatwg-encoding
+deprecation notices; these are maintenance follow-ups, not a security certification.
+Docker Compose also built both images from that clean checkout and started all three
+services. PostgreSQL and backend health checks passed; `/health/ready` returned `ready`
+and the frontend returned HTTP 200. The temporary database was removed after
+verification; the main development database was preserved. Local browser checks covered
+the populated overview, seeded alert evidence, and generating a fake advisory analysis.
+
+Scope: clean checkout was cloned locally from the committed repository, not downloaded
+using a new GitHub account. Locked installs, quality checks, Docker build/start, migrations,
+and seeding were exercised. Manual external PostgreSQL provisioning and cloud deployment
+were not tested. Later commits add screenshots and this verification record only.
 
 ## Reproduce from a clean checkout
 

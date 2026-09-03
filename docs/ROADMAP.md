@@ -9,4 +9,4 @@
 - [x] **Milestone 6 — RAG:** pgvector retrieval with source attribution.
 - [x] **Milestone 7 — Hardening:** rate limits, headers, scanner workflows, and threat-model review; review hosted scan findings before deployment.
 - [x] **Milestone 8 — Cloud design:** Render design and cost comparison documented; configuration, spend, and provisioning await explicit approval.
-- [ ] **Milestone 9 — Portfolio polish:** screenshots, demo material, interview notes, and clean-checkout verification.
+- [x] **Milestone 9 — Portfolio polish:** real screenshots, repeatable synthetic seed, recording script, interview notes, limitations, and clean-checkout verification. Hosted scan review remains a deployment gate.

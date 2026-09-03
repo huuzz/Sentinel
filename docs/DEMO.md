@@ -55,3 +55,10 @@ local development backend. This database includes 78 earlier synthetic events pl
 the 45 `sentinel-portfolio-v1` events, so its totals differ from an empty database.
 
 ![Actual SentinelAI dashboard](images/dashboard.jpg)
+
+![Advisory local analysis](images/alert-analysis.png)
+
+![Linked synthetic evidence](images/alert-evidence.jpg)
+
+These captures use the implementation at commit `13a8843`. The fixed 85% displayed
+by the fake analyzer is illustrative, not a calibrated probability or measured accuracy.
