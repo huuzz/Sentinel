@@ -36,8 +36,7 @@ async def get_current_user(
         raise error from None
     if user is None or not user.is_active:
         raise error
-    # Authorization lookup must not leave an implicit read transaction open for use cases
-    # that establish their own explicit transaction boundary.
+    # Services open their own transaction after this lookup.
     await session.commit()
     return user
 

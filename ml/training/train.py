@@ -1,4 +1,4 @@
-"""Train SentinelAI's educational Isolation Forest on reproducible synthetic data."""
+"""Train the Isolation Forest model on synthetic data."""
 import csv
 import hashlib
 import json

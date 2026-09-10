@@ -1,4 +1,4 @@
-"""Bounded, synthetic portfolio fixtures. Never sends traffic to their source IPs."""
+"""Synthetic events for the local demo."""
 
 from datetime import datetime, timedelta
 

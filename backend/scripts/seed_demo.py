@@ -1,4 +1,4 @@
-"""Add or resume one synthetic dataset without credentials or destructive resets."""
+"""Seed the local demo dataset."""
 
 import argparse
 import asyncio

@@ -19,7 +19,7 @@ def upgrade() -> None:
     ):
         op.execute(sa.text(f"UPDATE {table} SET {column} = now() WHERE {column} IS NULL"))
         op.alter_column(table, column, existing_type=sa.DateTime(timezone=True), nullable=False)
-    # Early demo databases predate the explicit evidence uniqueness constraint.
+    # Existing databases may not have this constraint.
     op.execute("""
         DO $$ BEGIN
             IF NOT EXISTS (

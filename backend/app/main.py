@@ -157,7 +157,7 @@ async def unhandled_exception(request: Request, _: Exception) -> JSONResponse:
 
 @app.exception_handler(RequestValidationError)
 async def invalid_request(request: Request, error: RequestValidationError) -> JSONResponse:
-    # Never echo submitted passwords, tokens, or telemetry in validation errors.
+    # Return field locations and error types only; submitted values may be sensitive.
     return JSONResponse(
         status_code=422,
         content={

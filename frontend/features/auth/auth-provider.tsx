@@ -23,7 +23,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (response.ok) { const body = await response.json(); setToken(body.access_token); await loadUser(body.access_token); }
     setReady(true);
   }, [loadUser]);
-  // Session restoration is an external cookie-backed synchronization on first mount.
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { void refresh(); }, [refresh]);
   useEffect(() => { if (ready && !user && pathname !== "/login") router.replace("/login"); }, [pathname, ready, router, user]);
