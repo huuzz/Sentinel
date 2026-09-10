@@ -10,7 +10,7 @@ class Settings(BaseSettings):
         env_file=".env", env_prefix="SENTINEL_", extra="ignore", case_sensitive=False
     )
 
-    app_name: str = "SentinelAI API"
+    app_name: str = "Sentinel API"
     environment: str = "development"
     log_level: str = "INFO"
     database_url: str = Field(

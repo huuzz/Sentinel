@@ -14,7 +14,7 @@ DatabaseSession = Annotated[AsyncSession, Depends(get_session)]
 
 class HealthResponse(BaseModel):
     status: str
-    service: str = "sentinelai-backend"
+    service: str = "sentinel-backend"
 
 
 @router.get("/live", response_model=HealthResponse)

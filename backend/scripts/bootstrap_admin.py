@@ -31,7 +31,7 @@ async def create_admin(email: str, password: str) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Create the first SentinelAI administrator")
+    parser = argparse.ArgumentParser(description="Create the first Sentinel administrator")
     parser.add_argument("--email", required=True)
     args = parser.parse_args()
     password = getpass.getpass("Password (12+ characters): ").rstrip("\r\n")

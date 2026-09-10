@@ -10,7 +10,7 @@ Select Render for the first small, always-on portfolio deployment: a public Next
 a private FastAPI container, and managed Render Postgres with pgvector. This is a design selection,
 not a provisioning request. Keep local Docker as the zero-hosting-cost option.
 
-| Option | Cost basis | Tradeoff for SentinelAI |
+| Option | Cost basis | Tradeoff for Sentinel |
 |---|---|---|
 | Render containers + managed Postgres (selected) | Indicative $20.30/month small-instance baseline below | Predictable compute; private backend; managed database recovery; no HA assumed |
 | Railway containers + PostgreSQL template | $5 monthly minimum credited toward metered usage | Potentially cheaper at low utilization, but template database maintenance remains ours |

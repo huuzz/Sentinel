@@ -55,7 +55,7 @@ jobs:
       - uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
         with:
           path: .
-          artifact-name: sentinelai-sbom.spdx.json
+          artifact-name: sentinel-sbom.spdx.json
   container-scan:
     runs-on: ubuntu-latest
     strategy:
@@ -63,9 +63,9 @@ jobs:
         service: [backend, frontend]
     steps:
       - uses: actions/checkout@v4
-      - run: docker build -t sentinelai-scan:${{ matrix.service }} ./${{ matrix.service }}
+      - run: docker build -t sentinel-scan:${{ matrix.service }} ./${{ matrix.service }}
       - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
-          image-ref: sentinelai-scan:${{ matrix.service }}
+          image-ref: sentinel-scan:${{ matrix.service }}
           severity: HIGH,CRITICAL
           exit-code: "1"

@@ -1,4 +1,4 @@
-name: sentinelai
+name: sentinel
 services:
   postgres:
     image: pgvector/pgvector:pg17
@@ -59,3 +59,4 @@ services:
 
 volumes:
   postgres_data:
+    name: sentinelai_postgres_data

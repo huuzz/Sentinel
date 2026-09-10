@@ -16,5 +16,5 @@ def test_scenarios_are_synthetic_and_use_reserved_addresses() -> None:
 
 
 def test_external_targets_are_rejected() -> None:
-    with pytest.raises(ValueError, match="local SentinelAI"):
+    with pytest.raises(ValueError, match="local Sentinel"):
         validate_target("https://example.com")

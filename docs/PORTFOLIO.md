@@ -1,8 +1,8 @@
-# Explaining SentinelAI
+# Explaining Sentinel
 
 ## Short introduction
 
-SentinelAI is an educational security-monitoring application built with Next.js,
+Sentinel is an educational security-monitoring application built with Next.js,
 FastAPI, and PostgreSQL. Structured synthetic events produce deterministic findings
 with linked evidence. AI explanations and ML anomaly scores are advisory; neither
 performs remediation or establishes that an attack occurred.

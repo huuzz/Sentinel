@@ -1,6 +1,6 @@
-# SentinelAI
+# Sentinel
 
-SentinelAI is an educational security monitoring platform. It collects synthetic telemetry,
+Sentinel is an educational security monitoring platform. It collects synthetic telemetry,
 creates deterministic alerts with linked evidence, and adds advisory local AI explanations,
 synthetic-data anomaly scoring, and cited knowledge retrieval. It never performs remediation.
 
@@ -9,8 +9,6 @@ synthetic-data anomaly scoring, and cited knowledge retrieval. It never performs
 
 Start with the [repeatable demo](docs/DEMO.md), [verification record](docs/VERIFICATION.md),
 and [interview notes and known limitations](docs/PORTFOLIO.md).
-
-![SentinelAI running locally with synthetic telemetry](docs/images/dashboard.jpg)
 
 ## Current features
 
@@ -149,7 +147,7 @@ python -m simulator.cli suspicious-success --token YOUR_ANALYST_OR_ADMIN_ACCESS_
 
 Refresh `http://localhost:3000`. Normal events appear without an alert. The brute-force scenario adds ten failed authentication events from reserved IP `198.51.100.42`, produces one HIGH alert, and links those events as evidence on the alert detail page.
 
-The simulator refuses arbitrary external targets. Its `--url` option accepts only the local SentinelAI development stack.
+The simulator refuses arbitrary external targets. Its `--url` option accepts only the local Sentinel development stack.
 
 ## Security principles
 

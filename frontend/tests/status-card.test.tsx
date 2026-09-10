@@ -5,9 +5,9 @@ import "./setup";
 
 describe("StatusCard", () => {
   it("shows a healthy backend", () => {
-    render(<StatusCard state={{ status: "ok", service: "sentinelai-backend" }} />);
+    render(<StatusCard state={{ status: "ok", service: "sentinel-backend" }} />);
     expect(screen.getByText("Operational")).toBeInTheDocument();
-    expect(screen.getByText("sentinelai-backend")).toBeInTheDocument();
+    expect(screen.getByText("sentinel-backend")).toBeInTheDocument();
   });
 
   it("shows an unavailable backend", () => {

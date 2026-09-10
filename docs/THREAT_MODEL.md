@@ -13,7 +13,7 @@ Assets include user identities, refresh tokens, security telemetry, alerts, AI a
 | Alert flooding | Analyst fatigue and storage growth | Rule deduplication, ingestion limits, bounded evidence |
 | Prompt injection in logs or retrieved text | Misleading AI output or data disclosure | Instruction/data separation, minimal context, schema validation, no tools or actions |
 | Secret leakage through logs/prompts | Credential exposure | Redaction, allowlisted context, no full prompt or token logging |
-| Unsafe simulator targeting | Harm to external systems | Synthetic events only; local/explicit SentinelAI endpoint allowlist |
+| Unsafe simulator targeting | Harm to external systems | Synthetic events only; local/explicit Sentinel endpoint allowlist |
 | Supply-chain compromise | Malicious dependency or image | Lockfiles, review, dependency/secret scanning, pinned CI actions |
 
 The AI is an explanation assistant, not a detector or remediation agent. A human remains in control.

@@ -13,7 +13,7 @@ def validate_target(base_url: str) -> str:
         "::1",
         "backend",
     }:
-        raise ValueError("Simulator target must be the local SentinelAI development stack")
+        raise ValueError("Simulator target must be the local Sentinel development stack")
     return base_url.rstrip("/")
 
 
@@ -36,5 +36,5 @@ def send_events(
             with urllib.request.urlopen(request, timeout=5) as response:
                 responses.append(json.loads(response.read()))
         except urllib.error.URLError as exc:
-            raise RuntimeError(f"Could not reach SentinelAI at {target}") from exc
+            raise RuntimeError(f"Could not reach Sentinel at {target}") from exc
     return responses

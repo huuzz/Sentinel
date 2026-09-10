@@ -48,17 +48,8 @@ Use only synthetic data; exclude passwords, browser storage, cookies, tokens, te
 credentials, and unrelated tabs. Label captures with the commit and dataset source.
 Store reviewed images under `docs/images/`; do not substitute mockups for working UI.
 
-## Captured application
+## Screenshots
 
-Captured on 2026-09-03 from the Milestone 9 production frontend build against the
-local development backend. This database includes 78 earlier synthetic events plus
-the 45 `sentinel-portfolio-v1` events, so its totals differ from an empty database.
-
-![Actual SentinelAI dashboard](images/dashboard.jpg)
-
-![Advisory local analysis](images/alert-analysis.png)
-
-![Linked synthetic evidence](images/alert-evidence.jpg)
-
-These captures use the implementation at commit `13a8843`. The fixed 85% displayed
-by the fake analyzer is illustrative, not a calibrated probability or measured accuracy.
+The screenshots from the previous name were removed during the Sentinel rename.
+Capture replacements after the local Docker stack is available. Use the checklist
+above and record the commit and dataset source with each image.

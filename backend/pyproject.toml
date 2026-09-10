@@ -1,5 +1,5 @@
 [project]
-name = "sentinelai-backend"
+name = "sentinel-backend"
 version = "0.1.0"
 description = "Explainable security monitoring with deterministic detection and advisory analysis"
 readme = "README.md"

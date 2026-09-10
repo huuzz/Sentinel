@@ -14,7 +14,7 @@ local results from pending checks; configured CI is not proof of a passing hoste
 - [x] Docker rebuild and health checks after the final changes.
 - [x] Seed an empty PostgreSQL database, verify 45 events and two alerts.
 - [x] Seed again and verify event/evidence/alert counts do not increase.
-- [x] Capture actual dashboard and evidence screenshots using synthetic data.
+- [ ] Recapture dashboard and evidence screenshots after the Sentinel rename.
 - [x] Verify locked installs and quality checks from a clean checkout.
 - [ ] Review hosted CI and security scanner findings before deployment.
 
@@ -47,8 +47,8 @@ were not tested. Later commits add screenshots and this verification record only
 Run each command from the indicated directory, checking its exit code before proceeding.
 
 ```sh
-git clone https://github.com/huuzz/SentinalAI.git
-cd SentinalAI
+git clone https://github.com/huuzz/Sentinel.git
+cd Sentinel
 cp .env.example .env
 # Set your local database password and JWT secret in .env; never commit this file.
 docker compose up --build -d

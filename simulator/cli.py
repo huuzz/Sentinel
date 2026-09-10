@@ -6,7 +6,7 @@ from simulator.scenarios import api_volume_events, brute_force_events, normal_ev
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate safe synthetic SentinelAI events")
+    parser = argparse.ArgumentParser(description="Generate safe synthetic Sentinel events")
     parser.add_argument("scenario", choices=["normal", "brute-force", "password-spray", "api-volume", "suspicious-success"])
     parser.add_argument(
         "--url", default=os.getenv("SENTINEL_SIMULATOR_URL", "http://localhost:8000")

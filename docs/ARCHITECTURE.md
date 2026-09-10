@@ -26,7 +26,7 @@ relational source metadata in PostgreSQL. The retrieval service performs cosine-
 passes only selected excerpts to an answer-generator interface. The local implementation is
 deterministic; future adapters must preserve citation validation, bounds, and the zero-tools policy.
 
-SentinelAI begins as a modular monolith: one FastAPI deployment owns domain behavior and one Next.js deployment owns the interface. PostgreSQL is the only datastore. This keeps transactions, operations, and interview explanations clear while retaining internal service boundaries.
+Sentinel begins as a modular monolith: one FastAPI deployment owns domain behavior and one Next.js deployment owns the interface. PostgreSQL is the only datastore. This keeps transactions, operations, and interview explanations clear while retaining internal service boundaries.
 
 ```mermaid
 flowchart TD
